@@ -1,6 +1,6 @@
-package com.global.devicemanagement.entity;
+package com.company.devicemanagement.entity;
 
-import com.global.devicemanagement.enums.State;
+import com.company.devicemanagement.enums.State;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,13 +19,13 @@ public class DeviceEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "NAME", updatable = true, nullable = false)
+    @Column(name = "NAME",  nullable = false)
     private String name;
 
-    @Column(name = "BRAND", updatable = true, nullable = false)
+    @Column(name = "BRAND", nullable = false)
     private String brand;
 
-    @Column(name = "STATE", updatable = true, nullable = true)
+    @Column(name = "STATE")
     @Enumerated(EnumType.STRING)
     private State state;
 

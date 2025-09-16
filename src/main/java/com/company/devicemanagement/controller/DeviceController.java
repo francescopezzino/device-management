@@ -1,11 +1,10 @@
-package com.global.devicemanagement.controller;
+package com.company.devicemanagement.controller;
 
-import com.global.devicemanagement.dto.DeviceDTO;
-import com.global.devicemanagement.entity.DeviceEntity;
-import com.global.devicemanagement.enums.State;
-import com.global.devicemanagement.service.DeviceService;
+import com.company.devicemanagement.dto.DeviceDTO;
+import com.company.devicemanagement.service.DeviceService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,8 +28,13 @@ public class DeviceController {
      * @param deviceDTO
      * @return ResponseEntity<DeviceEntity>
      */
-        @PostMapping("/createNew")
-    public ResponseEntity<DeviceEntity> createDevice(@RequestBody DeviceDTO deviceDTO) {
+    @Operation( description= "This method is used for user registration")
+    @PostMapping("/createNew")
+    public ResponseEntity<DeviceDTO> createDevice(@Parameter(
+            name = "deviceDTO",
+            example = "device information",
+            required = true
+    )@RequestBody DeviceDTO deviceDTO) {
         deviceDTO.setCreationTime(new Date());
         return ResponseEntity.ok(deviceService.createNewDevice(deviceDTO));
     }

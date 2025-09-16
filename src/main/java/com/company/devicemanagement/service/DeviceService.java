@@ -1,8 +1,8 @@
-package com.global.devicemanagement.service;
+package com.company.devicemanagement.service;
 
-import com.global.devicemanagement.dto.DeviceDTO;
-import com.global.devicemanagement.entity.DeviceEntity;
-import com.global.devicemanagement.repository.DeviceRepository;
+import com.company.devicemanagement.dto.DeviceDTO;
+import com.company.devicemanagement.entity.DeviceEntity;
+import com.company.devicemanagement.repository.DeviceRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,10 +23,13 @@ public class DeviceService {
         this.deviceRepository = deviceRepository;
     }
 
-    public DeviceEntity createNewDevice(DeviceDTO deviceDto) {
+    public DeviceDTO createNewDevice(DeviceDTO deviceDto) {
         DeviceEntity deviceEntity = new DeviceEntity();
         BeanUtils.copyProperties(deviceDto, deviceEntity);
-        return deviceRepository.save(deviceEntity);
+        deviceEntity = deviceRepository.save(deviceEntity);
+        DeviceDTO retDto =  new DeviceDTO();
+        BeanUtils.copyProperties(deviceEntity, retDto);
+        return retDto;
     }
 
     // TODO: Creation tme cannot be updated.
@@ -36,7 +39,7 @@ public class DeviceService {
         BeanUtils.copyProperties(deviceDTO, deviceEntity);
         deviceEntity = deviceRepository.save(deviceEntity);
         DeviceDTO retDto =  new DeviceDTO();
-        BeanUtils.copyProperties(deviceEntity, new DeviceDTO());
+        BeanUtils.copyProperties(deviceEntity, retDto);
        return retDto;
     }
 
@@ -72,7 +75,7 @@ public class DeviceService {
     }
 
     private static List<DeviceDTO> getDeviceDTOS(List<DeviceEntity> entityDevices) {
-        List<DeviceDTO> dtoDevices = new ArrayList();
+        List<DeviceDTO> dtoDevices = new ArrayList<>();
         for (DeviceEntity entity : entityDevices) {
             DeviceDTO dto = new DeviceDTO();
             BeanUtils.copyProperties(entity, dto);

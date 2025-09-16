@@ -1,4 +1,4 @@
-package com.global.devicemanagement;
+package com.company.devicemanagement;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

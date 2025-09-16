@@ -1,4 +1,4 @@
-package com.global.devicemanagement.enums;
+package com.company.devicemanagement.enums;
 
 public enum State {
 

@@ -1,15 +1,20 @@
 package com.global.devicemanagement.controller;
 
+import com.global.devicemanagement.dto.DeviceDTO;
 import com.global.devicemanagement.entity.DeviceEntity;
+import com.global.devicemanagement.enums.State;
 import com.global.devicemanagement.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/devices")
+@RequestMapping("/api/v1/devices")
 public class DeviceController {
 
     private final DeviceService deviceService;
@@ -19,31 +24,99 @@ public class DeviceController {
         this.deviceService = deviceService;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<DeviceEntity> getDeviceById(@PathVariable Long id) {
-        Optional<DeviceEntity> device = deviceService.getDeviceById(id);
-        return device.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    /**
+     * Create a new device
+     * @param deviceDTO
+     * @return ResponseEntity<DeviceEntity>
+     */
+        @PostMapping("/createNew")
+    public ResponseEntity<DeviceEntity> createDevice(@RequestBody DeviceDTO deviceDTO) {
+        deviceDTO.setCreationTime(new Date());
+        return ResponseEntity.ok(deviceService.createNewDevice(deviceDTO));
     }
 
-
+    /**
+     * Fully and/or par:ally update an existing device
+     * @param id
+     * @param deviceDTO
+     * @return ResponseEntity<DeviceDTO>
+     */
     @PutMapping("/{id}")
-    public ResponseEntity<DeviceEntity> updateDevice(@PathVariable Long id, @RequestBody DeviceEntity deviceEntity) {
-        Optional<DeviceEntity> deviceOptional = deviceService.getDeviceById(id);
-        if (deviceOptional.isPresent()) {
-            DeviceEntity updatedDevice = deviceOptional.get();
-            updatedDevice.setName(deviceEntity.getName());
-            updatedDevice.setBrand(deviceEntity.getBrand());
+    public ResponseEntity<DeviceDTO> updateDevice(@PathVariable Long id, @RequestBody DeviceDTO deviceDTO) {
+        Optional<DeviceDTO> deviceOptional = deviceService.getDeviceById(id);
+        if (!deviceOptional.isEmpty()) {
+            DeviceDTO updatedDevice = deviceOptional.get();
+            updatedDevice.setName(deviceDTO.getName());
+            updatedDevice.setBrand(deviceDTO.getBrand());
             return ResponseEntity.ok(deviceService.updateDevice(updatedDevice));
-        } else {
-            return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/addNew")
-    public ResponseEntity<DeviceEntity> createDevice(@RequestBody DeviceEntity deviceEntity) {
-        return ResponseEntity.ok(deviceService.saveDevice(deviceEntity));
+    /**
+     * Fetch a single device
+     * @param id
+     * @return ResponseEntity<DeviceDTO>
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<DeviceDTO> getDeviceById(@PathVariable Long id) {
+        Optional<DeviceDTO> deviceDTOOptional = deviceService.getDeviceById(id);
+        if (deviceDTOOptional.isPresent()) {
+            return ResponseEntity.ok(deviceDTOOptional.get());
+        }
+        return ResponseEntity.notFound().build();
     }
 
+    /**
+     * Fetch all devices
+     * @return ResponseEntity<List<DeviceDTO>>
+     */
+    @GetMapping("/fetchAll")
+    public ResponseEntity<List<DeviceDTO>> getAllDevices() {
+        List<DeviceDTO> dtoDevices = deviceService.fetchAllDevices();
+        if(!dtoDevices.isEmpty()) {
+            //return new ResponseEntity<List<DeviceDTO>>(dtoDevices, OK);
+            return ResponseEntity.ok(dtoDevices);
+        }
+        return ResponseEntity.noContent().build();
+    }
+
+
+    /**
+     * Fetch devices by brand
+     * @param brand
+     * @return ResponseEntity<List<DeviceDTO>>
+     */
+    @GetMapping("/fetchAllByBrand")
+    public ResponseEntity<List<DeviceDTO>> getDevicesByBrand(@RequestParam(value = "brand", required = true) String brand) {
+        List<DeviceDTO> dtoDevices = deviceService.fetchDevicesByBrand(brand);
+        if(!dtoDevices.isEmpty()) {
+            //return new ResponseEntity<List<DeviceDTO>>(dtoDevices, OK);
+            return ResponseEntity.ok(dtoDevices);
+        }
+        return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * Fetch devices by state
+     * @param state
+     * @return ResponseEntity<List<DeviceDTO>>
+     */
+    @GetMapping("/fetchAllByState")
+    public ResponseEntity<List<DeviceDTO>> getDevicesByState(@RequestParam(value = "state", required = true) String state) {
+        List<DeviceDTO>  dtoDevices = deviceService.fetchDevicesByState(state);
+        if(!dtoDevices.isEmpty()) {
+            //return new ResponseEntity<List<DeviceDTO>>(dtoDevices, OK);
+            return ResponseEntity.ok(dtoDevices);
+        }
+        return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * Delete a single device
+     * @param id
+     * @return ResponseEntity<Void>
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDevice(@PathVariable Long id) {
         deviceService.deleteDevice(id);

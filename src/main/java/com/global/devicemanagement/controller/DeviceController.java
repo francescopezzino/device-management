@@ -20,31 +20,27 @@ public class DeviceController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Device> getTaskById(@PathVariable Long id) {
-        Optional<Device> task = deviceService.getDeviceById(id);
-        if (task.isPresent()) {
-            return ResponseEntity.ok(task.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Device> getDeviceById(@PathVariable Long id) {
+        Optional<Device> device = deviceService.getDeviceById(id);
+        return device.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<Device> updateTask(@PathVariable Long id, @RequestBody Device device) {
-        Optional<Device> taskOptional = deviceService.getDeviceById(id);
-        if (taskOptional.isPresent()) {
-            Device updatedTask = taskOptional.get();
-            updatedTask.setName(device.getName());
-            updatedTask.setBrand(device.getBrand());
-            return ResponseEntity.ok(deviceService.saveDevice(updatedTask));
+    public ResponseEntity<Device> updateDevice(@PathVariable Long id, @RequestBody Device device) {
+        Optional<Device> deviceOptional = deviceService.getDeviceById(id);
+        if (deviceOptional.isPresent()) {
+            Device updatedDevice = deviceOptional.get();
+            updatedDevice.setName(device.getName());
+            updatedDevice.setBrand(device.getBrand());
+            return ResponseEntity.ok(deviceService.saveDevice(updatedDevice));
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @PostMapping("/addNew")
-    public ResponseEntity<Device> createTask(@RequestBody Device device) {
+    public ResponseEntity<Device> createDevice(@RequestBody Device device) {
         return ResponseEntity.ok(deviceService.saveDevice(device));
     }
 

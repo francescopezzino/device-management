@@ -3,12 +3,9 @@ package com.global.devicemanagement.service;
 import com.global.devicemanagement.entity.Device;
 import com.global.devicemanagement.repository.DeviceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
 
 import java.util.Optional;
 
@@ -19,16 +16,16 @@ public class DeviceService {
     private final DeviceRepository deviceRepository;
 
     @Autowired
-    public DeviceService(DeviceRepository taskRepository) {
-        this.deviceRepository = taskRepository;
+    public DeviceService(DeviceRepository deviceRepository) {
+        this.deviceRepository = deviceRepository;
     }
 
     public Optional<Device> getDeviceById(Long id) {
         return deviceRepository.findById(id);
     }
 
-    public Device saveDevice(Device task) {
-        return deviceRepository.save(task);
+    public Device saveDevice(Device device) {
+        return deviceRepository.save(device);
     }
     @DeleteMapping
     public void deleteDevice(Long id) {

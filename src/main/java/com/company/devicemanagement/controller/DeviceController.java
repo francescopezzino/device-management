@@ -28,7 +28,7 @@ public class DeviceController {
      * @param deviceDTO
      * @return ResponseEntity<DeviceEntity>
      */
-    @Operation( description= "This method is used for user registration")
+    @Operation( description= "This method is used to create a new device")
     @PostMapping("/createNew")
     public ResponseEntity<DeviceDTO> createDevice(@Parameter(
             name = "deviceDTO",

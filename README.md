@@ -63,6 +63,75 @@ Using Swagger UI is possible to test the endpoint
 
 - GET /api/v1/devices/fetchAllByBrand
 
+### POST
+
+```
+curl -X 'POST' \
+  'http://localhost:8080/api/v1/devices/createNew' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "string",
+  "brand": "string",
+  "state": "ACTIVE"
+}'
+```
+##### Request body
+```
+{
+"name": "string",
+"brand": "string",
+"state": "ACTIVE"
+}
+```
+##### Response body
+```
+{
+  "id": 5,
+  "name": "string",
+  "brand": "string",
+  "state": "ACTIVE",
+  "creationTime": "2025-09-17T22:06:54.500+00:00"
+}
+
+```
+##### Response headers
+```
+ connection: keep-alive 
+ content-type: application/json 
+ date: Wed,17 Sep 2025 22:06:54 GMT 
+ keep-alive: timeout=60 
+ transfer-encoding: chunked 
+```
+### GET
+
+```
+curl -X 'GET' \
+  'http://localhost:8080/api/v1/devices/5' \
+  -H 'accept: */*'
+```
+##### Request URL
+```
+http://localhost:8080/api/v1/devices/5
+```
+##### Response body
+```
+{
+  "id": 5,
+  "name": "string",
+  "brand": "string",
+  "state": "ACTIVE",
+  "creationTime": "2025-09-17T22:06:54.500+00:00"
+}
+```
+##### Response headers
+```
+connection: keep-alive 
+ content-type: application/json 
+ date: Wed,17 Sep 2025 22:15:08 GMT 
+ keep-alive: timeout=60 
+ transfer-encoding: chunked 
+```
 
 ### Schemas
 #### DeviceDTO

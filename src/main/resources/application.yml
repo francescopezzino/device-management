@@ -1,0 +1,27 @@
+hibernate:
+    hbm2ddl:
+        auto: validate
+management:
+    endpoints:
+        jmx:
+            exposure:
+                include: health,metrics,info,env,beans,configprops
+        web:
+            exposure:
+                include: health,metrics,info,env,beans,configprops
+spring:
+    datasource:
+        driverClassName: com.mysql.cj.jdbc.Driver
+        password: password
+        url: jdbc:mysql://localhost:3306/DEVICES_MANAGEMENT?serverTimezone=UTC
+        username: root
+    jpa:
+        hibernate:
+            ddl-auto: create-drop
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQLDialect
+        show-sql: true
+springdoc:
+    api-docs:
+        path: /api-docs

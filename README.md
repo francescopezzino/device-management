@@ -53,8 +53,7 @@ Using Swagger UI is possible to test the endpoint
 
 - PUT /api/v1/devices/{id}
 
-- DELETE
-- /api/v1/devices/{id}
+- DELETE /api/v1/devices/{id}
 
 - POST /api/v1/devices/createNew
 

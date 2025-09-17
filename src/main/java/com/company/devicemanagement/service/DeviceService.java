@@ -2,6 +2,7 @@ package com.company.devicemanagement.service;
 
 import com.company.devicemanagement.dto.DeviceDTO;
 import com.company.devicemanagement.entity.DeviceEntity;
+import static com.company.devicemanagement.enums.State.ACTIVE;
 import com.company.devicemanagement.exception.BusinessException;
 import com.company.devicemanagement.exception.ErrorModel;
 import com.company.devicemanagement.repository.DeviceRepository;
@@ -37,8 +38,30 @@ public class DeviceService {
     // TODO: Creation tme cannot be updated.
     // TODO: Name and brand proper:es cannot be updated if the device is in use.
     public DeviceDTO updateDevice(DeviceDTO deviceDTO) {
+        Optional<DeviceEntity> deviceEntityOptional =  deviceRepository.findById(deviceDTO.getId());
+        if (deviceEntityOptional.isPresent()) {
+            DeviceEntity deviceEntity = deviceEntityOptional.get();
+            if (deviceEntity.getState().equals(ACTIVE)) {
+                List<ErrorModel> errorModelList = new ArrayList<>();
+                ErrorModel errorModel = new ErrorModel();
+                if (!deviceDTO.getName().equals(deviceEntity.getName())) {
+                    errorModel.setCode("DEVICE_NAME_NOT_UPDATABLE");
+                    errorModel.setMessage("Device in use cannot update name");
+                    errorModelList.add(errorModel);
+                }
+                if (!deviceDTO.getBrand().equals(deviceEntity.getBrand())) {
+                    errorModel.setCode("DEVICE_BRAND_NOT_UPDATABLE");
+                    errorModel.setMessage("Device in use cannot update brand");
+                    errorModelList.add(errorModel);
+                }
+                if(errorModelList.size() > 0){
+                    throw new BusinessException(errorModelList);
+                }
+            }
+        }
         DeviceEntity deviceEntity = new DeviceEntity();
         BeanUtils.copyProperties(deviceDTO, deviceEntity);
+
         deviceEntity = deviceRepository.save(deviceEntity);
         DeviceDTO retDto =  new DeviceDTO();
         BeanUtils.copyProperties(deviceEntity, retDto);
@@ -70,18 +93,16 @@ public class DeviceService {
         return getDeviceDTOS(entityDevices);
     }
 
-    // TODO: In use devices cannot be deleted
     @DeleteMapping
     public void deleteDevice(Long id) {
         Optional<DeviceEntity> deviceEntityOptional =  deviceRepository.findById(id);
         if (deviceEntityOptional.isPresent()) {
             DeviceEntity deviceEntity = deviceEntityOptional.get();
-            if (deviceEntity.getState().equals("ACTIVE")) {
-                System.out.println();
+            if (deviceEntity.getState().equals(ACTIVE)) {
                 List<ErrorModel> errorModelList = new ArrayList<>();
                 ErrorModel errorModel = new ErrorModel();
                 errorModel.setCode("DEVICE_IS_ACTIVE");
-                errorModel.setMessage("Cannot delete active device");
+                errorModel.setMessage("Device in use cannot delete");
                 errorModelList.add(errorModel);
                 throw new BusinessException(errorModelList);
             }

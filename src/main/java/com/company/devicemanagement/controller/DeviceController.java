@@ -1,6 +1,7 @@
 package com.company.devicemanagement.controller;
 
 import com.company.devicemanagement.dto.DeviceDTO;
+import com.company.devicemanagement.enums.State;
 import com.company.devicemanagement.service.DeviceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -52,6 +53,7 @@ public class DeviceController {
             DeviceDTO updatedDevice = deviceOptional.get();
             updatedDevice.setName(deviceDTO.getName());
             updatedDevice.setBrand(deviceDTO.getBrand());
+            updatedDevice.setState(State.valueOf(deviceDTO.getState().toString()));
             return ResponseEntity.ok(deviceService.updateDevice(updatedDevice));
         }
         return ResponseEntity.notFound().build();

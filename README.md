@@ -86,8 +86,24 @@ Using Swagger UI is possible to test the endpoint
 ```
 
 ## Application Containerization
-Image can be built using the mavent goal build-image  
 The build-image goal requires access to a Docker daemon.  
+Image can be built using the mavent goal build-image: 
+
+```
+
+mvn spring-boot:build-image  
+
+```
+
+or  
+```
+
+mvn spring-boot:build-image-no-fork  
+
+```
+
+
+
 Refer to the following Spring Boot documentation:  
 - https://docs.spring.io/spring-boot/maven-plugin/build-image.html
 

@@ -53,7 +53,7 @@ public class DeviceController {
             DeviceDTO updatedDevice = deviceOptional.get();
             updatedDevice.setName(deviceDTO.getName());
             updatedDevice.setBrand(deviceDTO.getBrand());
-            updatedDevice.setState(State.valueOf(deviceDTO.getState().toString()));
+            updatedDevice.setState(deviceDTO.getState());
             return ResponseEntity.ok(deviceService.updateDevice(updatedDevice));
         }
         return ResponseEntity.notFound().build();

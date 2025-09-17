@@ -2,6 +2,8 @@ package com.company.devicemanagement.service;
 
 import com.company.devicemanagement.dto.DeviceDTO;
 import com.company.devicemanagement.entity.DeviceEntity;
+import com.company.devicemanagement.exception.BusinessException;
+import com.company.devicemanagement.exception.ErrorModel;
 import com.company.devicemanagement.repository.DeviceRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +73,19 @@ public class DeviceService {
     // TODO: In use devices cannot be deleted
     @DeleteMapping
     public void deleteDevice(Long id) {
+        Optional<DeviceEntity> deviceEntityOptional =  deviceRepository.findById(id);
+        if (deviceEntityOptional.isPresent()) {
+            DeviceEntity deviceEntity = deviceEntityOptional.get();
+            if (deviceEntity.getState().equals("ACTIVE")) {
+                System.out.println();
+                List<ErrorModel> errorModelList = new ArrayList<>();
+                ErrorModel errorModel = new ErrorModel();
+                errorModel.setCode("DEVICE_IS_ACTIVE");
+                errorModel.setMessage("Cannot delete active device");
+                errorModelList.add(errorModel);
+                throw new BusinessException(errorModelList);
+            }
+        }
         deviceRepository.deleteById(id);
     }
 

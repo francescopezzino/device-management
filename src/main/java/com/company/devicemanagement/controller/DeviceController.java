@@ -123,6 +123,7 @@ public class DeviceController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDevice(@PathVariable Long id) {
+
         deviceService.deleteDevice(id);
         return ResponseEntity.noContent().build();
     }

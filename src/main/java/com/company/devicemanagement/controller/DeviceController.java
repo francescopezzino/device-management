@@ -1,7 +1,6 @@
 package com.company.devicemanagement.controller;
 
 import com.company.devicemanagement.dto.DeviceDTO;
-import com.company.devicemanagement.enums.State;
 import com.company.devicemanagement.service.DeviceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

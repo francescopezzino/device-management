@@ -1,4 +1,4 @@
-# Devices API
+# Devices Management APIs
 
 REST API capable of persis:ng and managing device resources.
 

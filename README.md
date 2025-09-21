@@ -40,9 +40,11 @@ Clone the project and use Maven to build the server
 $ mvn clean install
 
 ## OpenAPI definition
-Open your browser at the following URL for Swagger UI (giving REST interface details):
- - http://localhost:8080/swagger-ui/index.htm  
 Using Swagger UI is possible to test the various endpoints
+
+Open your browser at the following URL for Swagger UI:
+ - http://localhost:8080/swagger-ui/index.htm  
+
 ### device-controller endpoints exposed
 - GET /api/v1/devices/{id}
 

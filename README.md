@@ -32,17 +32,11 @@ A CloudFoundry account (to deploy the server)
 There are a number of third-party dependencies used in the project. Browse the Maven pom.xml file for details of libraries and versions used.
 
 ## Building the project
-You will need:
 
-Java JDK 8 or higher
-Maven 3.1.1 or higher
 Git
 Clone the project and use Maven to build the server
 
 $ mvn clean install
-
-Deploying to the cloud
-You can deploy the server to CloudFoundry using:
 
 ## OpenAPI definition
 Open your browser at the following URL for Swagger UI (giving REST interface details):
@@ -155,7 +149,7 @@ connection: keep-alive
 
 ## Application Containerization
 The build-image goal requires access to a Docker daemon.  
-Image can be built using the mavent goal build-image: 
+Image can be built using the one the following maven goal: 
 
 ```
 

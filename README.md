@@ -1,6 +1,6 @@
 # Devices Management APIs
 
-REST API capable of persis:ng and managing device resources.
+REST API capable of persisting and managing device resources.
 
 ## Device Domain
 - Id
@@ -19,14 +19,15 @@ REST API capable of persis:ng and managing device resources.
 
 ## Requirements
 
- - JavA 21
+ - Java 21
  - Maven 3.9+
  - Git
  - MySQL Server Instance
 
 ## Spring Framework
 SpringBoot
-A CloudFoundry account (to deploy the server)
+
+spring boot starters dependencies
 
 ## Dependencies
 There are a number of third-party dependencies used in the project. Browse the Maven pom.xml file for details of libraries and versions used.

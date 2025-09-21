@@ -42,7 +42,7 @@ $ mvn clean install
 ## OpenAPI definition
 Open your browser at the following URL for Swagger UI (giving REST interface details):
  - http://localhost:8080/swagger-ui/index.htm  
-Using Swagger UI is possible to test the endpoint
+Using Swagger UI is possible to test the various endpoints
 ### device-controller endpoints exposed
 - GET /api/v1/devices/{id}
 

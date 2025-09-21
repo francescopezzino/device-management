@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +37,9 @@ public class DeviceController {
             required = true
     )@RequestBody DeviceDTO deviceDTO) {
         deviceDTO.setCreationTime(new Date());
-        return ResponseEntity.ok(deviceService.createNewDevice(deviceDTO));
+        DeviceDTO created = deviceService.createNewDevice(deviceDTO);
+        URI location = URI.create("/createNew/" + created.getId());
+        return ResponseEntity.created(location).body(created);
     }
 
     /**

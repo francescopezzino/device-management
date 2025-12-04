@@ -57,7 +57,7 @@ public class DeviceServiceImpl implements DeviceService {
                     errorModelList.add(errorModel);
                 }
                 if(errorModelList.size() > 0){
-                    throw new BusinessException(errorModelList);
+                        throw new BusinessException(errorModelList);
                 }
             }
         }

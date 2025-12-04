@@ -29,4 +29,5 @@ public class DeviceDTO {
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Date creationTime;
 
+
 }

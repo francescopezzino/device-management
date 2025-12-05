@@ -156,8 +156,10 @@ public class DeviceController {
     @GetMapping(value = "/getFluxDevices", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     Flux<DeviceDTO> getDevices() {
         List<DeviceDTO> dtoDevices = deviceService.fetchAllDevices();
-        Flux<DeviceDTO> products = Flux.<DeviceDTO>fromIterable(dtoDevices);
-        return products;
+        if(null == dtoDevices || dtoDevices.isEmpty()) {
+            return Flux.empty();
+        }
+        return Flux.<DeviceDTO>fromIterable(dtoDevices);
     }
 
 }

@@ -6,6 +6,7 @@ import static com.company.devicemanagement.enums.State.ACTIVE;
 import com.company.devicemanagement.exception.BusinessException;
 import com.company.devicemanagement.exception.ErrorModel;
 import com.company.devicemanagement.repository.DeviceRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,9 +15,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
+import java.util.logging.Logger;
+
 
 @Service
 public class DeviceServiceImpl implements DeviceService {
+
+    private Logger logger = Logger.getLogger(DeviceServiceImpl.class.getName());
 
     @Autowired
     private final DeviceRepository deviceRepository;
@@ -57,7 +63,7 @@ public class DeviceServiceImpl implements DeviceService {
                     errorModelList.add(errorModel);
                 }
                 if(errorModelList.size() > 0){
-                    throw new BusinessException(errorModelList);
+                        throw new BusinessException(errorModelList);
                 }
             }
         }
@@ -116,5 +122,7 @@ public class DeviceServiceImpl implements DeviceService {
         }
         deviceRepository.deleteById(id);
     }
-
+    public void setLogger(Logger logger) {
+        this.logger = logger;
+    }
 }

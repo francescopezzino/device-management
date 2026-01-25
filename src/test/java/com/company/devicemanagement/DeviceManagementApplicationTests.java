@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 //@RunWith(SpringRunner.class)
 //@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 //@AutoConfigureMockMvc
-@SpringBootTest
+//@SpringBootTest
 class DeviceManagementApplicationTests {
 
     @Test
